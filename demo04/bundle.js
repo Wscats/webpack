@@ -1,6 +1,8 @@
+'use strict';
+
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
-/******/ 	var installedModules = {};
+/******/ 	const installedModules = {};
 
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
@@ -10,7 +12,7 @@
 /******/ 			return installedModules[moduleId].exports;
 
 /******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
+/******/ 		const module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
 /******/ 			loaded: false
@@ -54,17 +56,17 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(2);
+	let content = __webpack_require__(2);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(4)(content, {});
+	let update = __webpack_require__(4)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
 			module.hot.accept("!!./../node_modules/css-loader/index.js!./app.css", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./app.css");
+				let newContent = require("!!./../node_modules/css-loader/index.js!./app.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -97,13 +99,13 @@
 	*/
 	// css base code, injected by the css-loader
 	module.exports = function() {
-		var list = [];
+		const list = [];
 
 		// return the list of modules as css string
 		list.toString = function toString() {
-			var result = [];
-			for(var i = 0; i < this.length; i++) {
-				var item = this[i];
+			const result = [];
+			for(let i = 0; i < this.length; i++) {
+				let item = this[i];
 				if(item[2]) {
 					result.push("@media " + item[2] + "{" + item[1] + "}");
 				} else {
@@ -117,14 +119,14 @@
 		list.i = function(modules, mediaQuery) {
 			if(typeof modules === "string")
 				modules = [[null, modules, ""]];
-			var alreadyImportedModules = {};
-			for(var i = 0; i < this.length; i++) {
-				var id = this[i][0];
+			const alreadyImportedModules = {};
+			for(let i = 0; i < this.length; i++) {
+				let id = this[i][0];
 				if(typeof id === "number")
 					alreadyImportedModules[id] = true;
 			}
 			for(i = 0; i < modules.length; i++) {
-				var item = modules[i];
+				let item = modules[i];
 				// skip already imported module
 				// this implementation is not 100% perfect for weird media query combinations
 				//  when a module is imported multiple times with different media queries.
@@ -151,7 +153,7 @@
 		MIT License http://www.opensource.org/licenses/mit-license.php
 		Author Tobias Koppers @sokra
 	*/
-	var stylesInDom = {},
+	const stylesInDom = {},
 		memoize = function(fn) {
 			var memo;
 			return function () {
@@ -178,25 +180,25 @@
 		// tags it will allow on a page
 		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
 
-		var styles = listToStyles(list);
+		let styles = listToStyles(list);
 		addStylesToDom(styles, options);
 
 		return function update(newList) {
-			var mayRemove = [];
-			for(var i = 0; i < styles.length; i++) {
-				var item = styles[i];
-				var domStyle = stylesInDom[item.id];
+			const mayRemove = [];
+			for(let i = 0; i < styles.length; i++) {
+				let item = styles[i];
+				let domStyle = stylesInDom[item.id];
 				domStyle.refs--;
 				mayRemove.push(domStyle);
 			}
 			if(newList) {
-				var newStyles = listToStyles(newList);
+				let newStyles = listToStyles(newList);
 				addStylesToDom(newStyles, options);
 			}
-			for(var i = 0; i < mayRemove.length; i++) {
-				var domStyle = mayRemove[i];
+			for(let i = 0; i < mayRemove.length; i++) {
+				let domStyle = mayRemove[i];
 				if(domStyle.refs === 0) {
-					for(var j = 0; j < domStyle.parts.length; j++)
+					for(let j = 0; j < domStyle.parts.length; j++)
 						domStyle.parts[j]();
 					delete stylesInDom[domStyle.id];
 				}
@@ -205,20 +207,20 @@
 	}
 
 	function addStylesToDom(styles, options) {
-		for(var i = 0; i < styles.length; i++) {
-			var item = styles[i];
-			var domStyle = stylesInDom[item.id];
+		for(let i = 0; i < styles.length; i++) {
+			let item = styles[i];
+			const domStyle = stylesInDom[item.id];
 			if(domStyle) {
 				domStyle.refs++;
-				for(var j = 0; j < domStyle.parts.length; j++) {
+				for(let j = 0; j < domStyle.parts.length; j++) {
 					domStyle.parts[j](item.parts[j]);
 				}
 				for(; j < item.parts.length; j++) {
 					domStyle.parts.push(addStyle(item.parts[j], options));
 				}
 			} else {
-				var parts = [];
-				for(var j = 0; j < item.parts.length; j++) {
+				const parts = [];
+				for(let j = 0; j < item.parts.length; j++) {
 					parts.push(addStyle(item.parts[j], options));
 				}
 				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
@@ -227,15 +229,15 @@
 	}
 
 	function listToStyles(list) {
-		var styles = [];
-		var newStyles = {};
-		for(var i = 0; i < list.length; i++) {
-			var item = list[i];
-			var id = item[0];
-			var css = item[1];
-			var media = item[2];
-			var sourceMap = item[3];
-			var part = {css: css, media: media, sourceMap: sourceMap};
+		const styles = [];
+		const newStyles = {};
+		for(let i = 0; i < list.length; i++) {
+			const item = list[i];
+			const id = item[0];
+			let css = item[1];
+			let media = item[2];
+			let sourceMap = item[3];
+			const part = {css: css, media: media, sourceMap: sourceMap};
 			if(!newStyles[id])
 				styles.push(newStyles[id] = {id: id, parts: [part]});
 			else
@@ -245,16 +247,16 @@
 	}
 
 	function createStyleElement() {
-		var styleElement = document.createElement("style");
-		var head = getHeadElement();
+		let styleElement = document.createElement("style");
+		let head = getHeadElement();
 		styleElement.type = "text/css";
 		head.appendChild(styleElement);
 		return styleElement;
 	}
 
 	function createLinkElement() {
-		var linkElement = document.createElement("link");
-		var head = getHeadElement();
+		const linkElement = document.createElement("link");
+		const head = getHeadElement();
 		linkElement.rel = "stylesheet";
 		head.appendChild(linkElement);
 		return linkElement;
@@ -264,7 +266,7 @@
 		var styleElement, update, remove;
 
 		if (options.singleton) {
-			var styleIndex = singletonCounter++;
+			const styleIndex = singletonCounter++;
 			styleElement = singletonElement || (singletonElement = createStyleElement());
 			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
 			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
@@ -302,8 +304,8 @@
 		};
 	}
 
-	var replaceText = (function () {
-		var textStore = [];
+	const replaceText = (function () {
+		const textStore = [];
 
 		return function (index, replacement) {
 			textStore[index] = replacement;
@@ -312,13 +314,13 @@
 	})();
 
 	function applyToSingletonTag(styleElement, index, remove, obj) {
-		var css = remove ? "" : obj.css;
+		let css = remove ? "" : obj.css;
 
 		if (styleElement.styleSheet) {
 			styleElement.styleSheet.cssText = replaceText(index, css);
 		} else {
-			var cssNode = document.createTextNode(css);
-			var childNodes = styleElement.childNodes;
+			const cssNode = document.createTextNode(css);
+			const childNodes = styleElement.childNodes;
 			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
 			if (childNodes.length) {
 				styleElement.insertBefore(cssNode, childNodes[index]);
@@ -329,9 +331,9 @@
 	}
 
 	function applyToTag(styleElement, obj) {
-		var css = obj.css;
-		var media = obj.media;
-		var sourceMap = obj.sourceMap;
+		let css = obj.css;
+		let media = obj.media;
+		let sourceMap = obj.sourceMap;
 
 		if(media) {
 			styleElement.setAttribute("media", media)
@@ -348,18 +350,18 @@
 	}
 
 	function updateLink(linkElement, obj) {
-		var css = obj.css;
-		var media = obj.media;
-		var sourceMap = obj.sourceMap;
+		const css = obj.css;
+		const media = obj.media;
+		const sourceMap = obj.sourceMap;
 
 		if(sourceMap) {
 			// http://stackoverflow.com/a/26603875
 			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
 		}
 
-		var blob = new Blob([css], { type: "text/css" });
+		const blob = new Blob([css], { type: "text/css" });
 
-		var oldSrc = linkElement.href;
+		const oldSrc = linkElement.href;
 
 		linkElement.href = URL.createObjectURL(blob);
 

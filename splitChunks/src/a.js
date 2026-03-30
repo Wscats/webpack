@@ -1,3 +1,5 @@
+'use strict';
+
 require('./c.js');
 require('./locallib.js');
 // const _ = require('lodash');

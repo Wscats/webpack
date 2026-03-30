@@ -1,3 +1,5 @@
+'use strict';
+
 require('./c.js');
 const $ = require('jquery')
 
